@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Приглашение на свадьбу</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Header Section -->
+  <header class="bg-cover bg-center h-screen text-white flex items-center justify-center relative" style="background-image: url('https://images.unsplash.com/photo-1519741497674-4113f2d1493b?auto=format&fit=crop&w=1920&q=80')">
+    <div class="text-center bg-black bg-opacity-50 p-8 rounded-lg">
+      <h1 class="text-5xl md:text-7xl font-bold mb-4">Татьяна & Константин</h1>
+      <p class="text-2xl md:text-3xl">Приглашаем вас на нашу свадьбу!</p>
+      <p class="text-lg mt-4">25 октября 2025 года</p>
+    </div>
+    <!-- стрелка вниз -->
+    <a href="#details" 
+       class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-5xl text-[#8b0000] hover:text-[#a52a2a] bounce">
+       ↓
+    </a>
+  </header>
+
+  <!-- Details Section -->
+  <section id="details" class="py-16 px-4 md:px-16 bg-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-8">Детали церемонии</h2>
+      <p class="text-lg mb-4">Мы рады пригласить вас разделить с нами этот особенный день. Пожалуйста, присоединяйтесь к нам на церемонии и праздновании!</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+
+        <!-- Дата и время -->
+        <div class="card">
+          <img src="https://img.icons8.com/ios-filled/100/8b0000/calendar.png" alt="Дата и время" class="mx-auto mb-4 w-16 h-16">
+          <h3 class="text-2xl font-semibold">Дата и время</h3>
+          <p class="mt-2">25 октября 2025 года<br>Церемония: 15:20<br>Празднование: 17:00</p>
+        </div>
+
+        <!-- Место проведения -->
+        <div class="card">
+          <img src="https://img.icons8.com/ios-filled/100/8b0000/marker.png" alt="Место проведения" class="mx-auto mb-4 w-16 h-16">
+          <h3 class="text-2xl font-semibold">Место проведения</h3>
+          <p class="mt-2">Большая Монетная ул., 17<br>Санкт-Петербург</p>
+        </div>
+
+        <!-- Дресс-код -->
+        <div class="card">
+          <img src="https://img.icons8.com/ios-filled/100/8b0000/dress-front-view.png" alt="Дресс-код" class="mx-auto mb-4 w-16 h-16">
+          <h3 class="text-2xl font-semibold">Дресс-код</h3>
+          <p class="mt-2">Dark Romance: элегантные наряды в глубоких тонах (черный, бордовый, темно-синий, изумрудный).</p>
+        </div>
+
+      </div>
+    </div>
+    <!-- стрелка вниз ко второй секции -->
+    <a href="#rsvp" 
+       class="block mx-auto mt-12 text-4xl text-[#8b0000] hover:text-[#a52a2a] bounce text-center">
+       ↓
+    </a>
+  </section>
+
+  <!-- RSVP Section -->
+  <section id="rsvp" class="py-16 px-4 md:px-16 bg-gray-100">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-8">Подтверждение участия</h2>
+      <p class="text-lg mb-6">Пожалуйста, дайте нам знать, сможете ли вы присутствовать, до 1 октября 2025 года.</p>
+      <form id="rsvp-form" class="mt-8">
+        <input type="text" name="name" placeholder="Ваше имя" class="w-full p-3 mb-4 border rounded-lg" required>
+        <select name="attendance" class="w-full p-3 mb-4 border rounded-lg" required>
+          <option value="Смогу присутствовать">Смогу присутствовать</option>
+          <option value="Не смогу присутствовать">Не смогу присутствовать</option>
+        </select>
+        <input type="text" name="alcohol" placeholder="Предпочитаемый алкоголь" class="w-full p-3 mb-4 border rounded-lg">
+        <button type="submit" class="btn">Отправить</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>С любовью, Татьяна & Константин</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center fade-in max-w-sm">
+      <h2 class="text-2xl font-bold mb-4">Спасибо!</h2>
+      <p>Мы получили ваше подтверждение 💌</p>
+      <button id="close-modal" class="btn mt-6">Закрыть</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzPuc3TUVYv7pDKwKHYnme6MWAocz8SFuatyBIIwW-1ahrwj6IkbJg_43Aje0BuBacO/exec';
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(this)
+      }).then(response => {
+        if (response.ok) {
+          document.getElementById('modal').classList.remove('hidden');
+        } else {
+          alert('Ошибка отправки. Пожалуйста, попробуйте позже.');
+        }
+      }).catch(error => {
+        alert('Ошибка: ' + error.message);
+      });
+    });
+
+    document.getElementById('close-modal').addEventListener('click', function() {
+      document.getElementById('modal').classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
